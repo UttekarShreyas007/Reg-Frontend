@@ -1,0 +1,46 @@
+const express = require("express");
+const multer = require("multer");
+const fs = require("fs").promises;
+const path = require("path");
+const FormModel = require("../models/FormModel");
+
+const router = express.Router();
+
+router.post("/submit", async (req, res) => {
+  try {
+    const formData = req.body;
+
+    const formEntry = new FormModel({
+      name: formData.name,
+      phoneNumber: formData.phoneNumber,
+      dob: formData.dob,
+      gender: formData.gender,
+      district: formData.district,
+      university: formData.university,
+      college: formData.college,
+      pincode: formData.pincode,
+      image: formData.image,
+    });
+
+    await formEntry.save();
+
+    res
+      .status(201)
+      .json({ message: "Form submitted successfully", code: formEntry.code });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+router.get("/all", async (req, res) => {
+  try {
+    const allFormData = await FormModel.find({}, { code: 1, name: 1, phoneNumber: 1, dob: 1, gender: 1, district: 1, university: 1, college: 1, pincode: 1, _id: 0, image: 1 });
+    res.status(200).json(allFormData);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+module.exports = router;
