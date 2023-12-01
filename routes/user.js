@@ -6,7 +6,10 @@ const FormModel = require("../models/FormModel");
 
 const router = express.Router();
 
-router.post("/submit", async (req, res) => {
+const storage = multer.memoryStorage(); 
+const upload = multer({ storage });
+
+router.post("/submit", upload.single("image"), async (req, res) => {
   try {
     const formData = req.body;
 
@@ -19,7 +22,7 @@ router.post("/submit", async (req, res) => {
       university: formData.university,
       college: formData.college,
       pincode: formData.pincode,
-      image: formData.image,
+      image: req.file.buffer.toString("base64"), 
     });
 
     await formEntry.save();
