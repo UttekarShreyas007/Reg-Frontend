@@ -14,6 +14,7 @@ router.post("/submit", upload.single("image"), async (req, res) => {
     const formData = req.body;
 
     const formEntry = new FormModel({
+      code:formData.code,
       name: formData.name,
       phoneNumber: formData.phoneNumber,
       dob: formData.dob,
