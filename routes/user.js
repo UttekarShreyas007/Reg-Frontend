@@ -21,7 +21,6 @@ router.post("/submit", upload.single("image"), async (req, res) => {
       gender: formData.gender,
       district: formData.district,
       university: formData.university,
-      college: formData.college,
       pincode: formData.pincode,
       image: req.file.buffer.toString("base64"), 
     });
@@ -39,7 +38,7 @@ router.post("/submit", upload.single("image"), async (req, res) => {
 
 router.get("/all", async (req, res) => {
   try {
-    const allFormData = await FormModel.find({}, { code: 1, name: 1, phoneNumber: 1, dob: 1, gender: 1, district: 1, university: 1, college: 1, pincode: 1, _id: 0, image: 1 });
+    const allFormData = await FormModel.find({}, { code: 1, name: 1, phoneNumber: 1, dob: 1, gender: 1, district: 1, university: 1, pincode: 1, _id: 0, image: 1 });
     res.status(200).json(allFormData);
   } catch (error) {
     console.error(error);

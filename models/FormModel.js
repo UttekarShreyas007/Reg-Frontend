@@ -29,10 +29,6 @@ const formSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  college: {
-    type: String,
-    required: true,
-  },
   pincode: {
     type: String,
     required: true,
